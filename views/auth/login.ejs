@@ -1,0 +1,22 @@
+<%- include('../partials/header', { title: 'Iniciar sesión' }) %>
+
+<div class="login-container">
+  <div class="login-card">
+    <h1 class="login-title">WATCHLIST</h1>
+    <p class="login-subtitle">¿Quién eres?</p>
+
+    <div class="login-users">
+      <% users.forEach(function(user) { %>
+        <form action="/login" method="POST">
+          <input type="hidden" name="userId" value="<%= user.id %>">
+          <button type="submit" class="login-user-btn">
+            <span class="user-avatar"><%= user.username.charAt(0) %></span>
+            <span class="user-name"><%= user.username %></span>
+          </button>
+        </form>
+      <% }); %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

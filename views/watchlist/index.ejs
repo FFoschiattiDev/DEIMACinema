@@ -1,0 +1,123 @@
+<%- include('../partials/header', { title: 'Mi Watchlist' }) %>
+<%- include('../partials/navbar', { username }) %>
+
+<main class="container">
+  <!-- Dashboard -->
+  <section class="dashboard">
+    <h1 class="dashboard-greeting">Hola, <%= username %></h1>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number"><%= stats.total %></span>
+        <span class="stat-label">TOTAL</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number"><%= stats.movies %></span>
+        <span class="stat-label">PELÍCULAS</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number"><%= stats.series %></span>
+        <span class="stat-label">SERIES</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number"><%= stats.pending %></span>
+        <span class="stat-label">PENDIENTES</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number"><%= stats.watching %></span>
+        <span class="stat-label">VIENDO</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number"><%= stats.completed %></span>
+        <span class="stat-label">TERMINADAS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search & Filters -->
+  <section class="filters-section">
+    <form action="/watchlist" method="GET" class="filters-form">
+      <div class="search-box">
+        <input
+          type="text"
+          name="search"
+          placeholder="Buscar por título..."
+          value="<%= filters.search %>"
+          class="search-input"
+        >
+      </div>
+
+      <div class="filter-group">
+        <select name="type" class="filter-select">
+          <option value="">Todos los tipos</option>
+          <option value="movie" <%= filters.type === 'movie' ? 'selected' : '' %>>Películas</option>
+          <option value="series" <%= filters.type === 'series' ? 'selected' : '' %>>Series</option>
+        </select>
+
+        <select name="status" class="filter-select">
+          <option value="">Todos los estados</option>
+          <option value="pending" <%= filters.status === 'pending' ? 'selected' : '' %>>Pendientes</option>
+          <option value="watching" <%= filters.status === 'watching' ? 'selected' : '' %>>Viendo</option>
+          <option value="completed" <%= filters.status === 'completed' ? 'selected' : '' %>>Terminadas</option>
+          <option value="dropped" <%= filters.status === 'dropped' ? 'selected' : '' %>>Abandonadas</option>
+        </select>
+
+        <button type="submit" class="btn btn-filter">Filtrar</button>
+        <a href="/watchlist" class="btn btn-clear">Limpiar</a>
+      </div>
+    </form>
+  </section>
+
+  <!-- Watchlist Items -->
+  <section class="watchlist-section">
+    <% if (items.length === 0) { %>
+      <div class="empty-state">
+        <p>No se encontraron elementos.</p>
+        <a href="/watchlist/create" class="btn btn-primary">+ Agregar tu primer título</a>
+      </div>
+    <% } else { %>
+      <div class="watchlist-grid">
+        <% items.forEach(function(item) { %>
+          <div class="watchlist-card">
+            <div class="card-header">
+              <h3 class="card-title"><%= item.title %></h3>
+              <span class="card-type type-<%= item.type %>">
+                <%= item.type === 'movie' ? 'PELÍCULA' : 'SERIE' %>
+              </span>
+            </div>
+
+            <div class="card-body">
+              <span class="card-status status-<%= item.status %>">
+                ●
+                <% if (item.status === 'pending') { %>Pendiente
+                <% } else if (item.status === 'watching') { %>Viendo
+                <% } else if (item.status === 'completed') { %>Terminada
+                <% } else if (item.status === 'dropped') { %>Abandonada
+                <% } %>
+              </span>
+
+              <% if (item.rating) { %>
+                <span class="card-rating">★ <%= item.rating %>/10</span>
+              <% } else { %>
+                <span class="card-rating card-rating-none">Sin puntuación</span>
+              <% } %>
+
+              <% if (item.comment) { %>
+                <p class="card-comment"><%= item.comment %></p>
+              <% } %>
+            </div>
+
+            <div class="card-actions">
+              <a href="/watchlist/edit/<%= item.id %>" class="btn btn-edit">Editar</a>
+              <form action="/watchlist/delete/<%= item.id %>" method="POST" class="delete-form">
+                <button type="submit" class="btn btn-delete">Eliminar</button>
+              </form>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

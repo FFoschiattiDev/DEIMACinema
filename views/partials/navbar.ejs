@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <a href="/watchlist" class="navbar-brand">WATCHLIST</a>
+    <div class="navbar-links">
+      <a href="/watchlist" class="nav-link">Inicio</a>
+      <a href="/watchlist/create" class="nav-link nav-link-add">+ Agregar</a>
+      <span class="nav-user"><%= typeof username !== 'undefined' ? username : '' %></span>
+      <form action="/logout" method="POST" class="nav-logout-form">
+        <button type="submit" class="nav-link nav-logout">Cerrar sesión</button>
+      </form>
+    </div>
+  </div>
+</nav>

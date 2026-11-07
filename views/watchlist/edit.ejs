@@ -1,0 +1,67 @@
+<%- include('../partials/header', { title: 'Editar' }) %>
+<%- include('../partials/navbar', { username }) %>
+
+<main class="container">
+  <div class="form-container">
+    <h1 class="form-title">Editar elemento</h1>
+
+    <form action="/watchlist/edit/<%= item.id %>" method="POST" class="watchlist-form">
+      <div class="form-group">
+        <label for="title">Título</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="<%= item.title %>"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="type">Tipo</label>
+        <select id="type" name="type" required class="form-input">
+          <option value="movie" <%= item.type === 'movie' ? 'selected' : '' %>>Película</option>
+          <option value="series" <%= item.type === 'series' ? 'selected' : '' %>>Serie</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Estado</label>
+        <select id="status" name="status" required class="form-input">
+          <option value="pending" <%= item.status === 'pending' ? 'selected' : '' %>>Pendiente</option>
+          <option value="watching" <%= item.status === 'watching' ? 'selected' : '' %>>Viendo</option>
+          <option value="completed" <%= item.status === 'completed' ? 'selected' : '' %>>Terminada</option>
+          <option value="dropped" <%= item.status === 'dropped' ? 'selected' : '' %>>Abandonada</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Puntuación (1-10)</label>
+        <select id="rating" name="rating" class="form-input">
+          <option value="">Sin puntuación</option>
+          <% for (let i = 1; i <= 10; i++) { %>
+            <option value="<%= i %>" <%= item.rating === i ? 'selected' : '' %>><%= i %></option>
+          <% } %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="comment">Comentario (opcional)</label>
+        <textarea
+          id="comment"
+          name="comment"
+          rows="3"
+          class="form-input"
+        ><%= item.comment || '' %></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <a href="/watchlist" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
