@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Watchlist
 
 Aplicación web personal para registrar y administrar películas y series.
@@ -173,3 +174,7 @@ Navegador (muestra la página)
 ## Licencia
 
 Proyecto educativo.
+=======
+# DEIMACinema
+Página web para armar tu propia lista de Películas/Series y llevar un seguimiento. 
+>>>>>>> 4f8e7983c11ecbdffd965fb451e2acad08c55b5f
