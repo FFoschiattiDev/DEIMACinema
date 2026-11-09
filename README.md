@@ -12,10 +12,6 @@ Desarrollada con **Node.js + Express + MySQL + EJS** siguiendo el patrón **MVC*
 - Node.js
 - Express.js
 - MySQL
-- mysql2
-- EJS
-- express-session
-- dotenv
 
 ---
 
